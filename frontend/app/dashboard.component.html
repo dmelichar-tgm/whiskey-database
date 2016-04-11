@@ -1,0 +1,8 @@
+<h3>Top Whiskeys</h3>
+<div class="grid grid-pad">
+  <div *ngFor="#whiskey of whiskeys" (click)="gotoDetail(whiskey)" class="col-1-4">
+    <div class="module whiskey">
+      <h4>{{whiskey.name}}</h4>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<h2>My Whiskeys</h2>
+<ul class="whiskeys">
+  <li *ngFor="#whiskey of whiskeys"
+    [class.selected]="whiskey === selectedWhiskey"
+    (click)="onSelect(whiskey)">
+    <span class="badge">{{whiskey.id}}</span> {{whiskey.name}}
+  </li>
+</ul>
+<div *ngIf="selectedWhiskey">
+  <h2>
+    {{selectedWhiskey.name | uppercase}} is my Whiskey
+  </h2>
+  <button (click)="gotoDetail()">View Details</button>
+</div>
