@@ -42,8 +42,7 @@ System.register(['angular2/core', 'angular2/router', './whiskey-detail.component
                 }
                 WhiskeysComponent.prototype.getWhiskeys = function () {
                     return this.http.get(this._whiskeysUrl)
-                        .map(function (res) { return res.json().data; })
-                        .do(console.log(data)) // eyeball results in the console
+                        .map(this.extractData)
                         .catch(this.handleError);
                 };
                 WhiskeysComponent.prototype.ngOnInit = function () {
@@ -54,9 +53,15 @@ System.register(['angular2/core', 'angular2/router', './whiskey-detail.component
                     this._router.navigate(['WhiskeyDetail', { id: this.selectedWhiskey.id }]);
                 };
                 WhiskeysComponent.prototype.handleError = function (error) {
-                    console.log('hello');
                     console.error(error);
                     return Observable_1.Observable.throw(error.json().error || 'Server error');
+                };
+                WhiskeysComponent.prototype.extractData = function (res) {
+                    if (res.status < 200 || res.status >= 300) {
+                        throw new Error('Bad response status: ' + res.status);
+                    }
+                    var body = res.json();
+                    return body.data || {};
                 };
                 WhiskeysComponent = __decorate([
                     core_1.Component({

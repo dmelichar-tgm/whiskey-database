@@ -36,8 +36,7 @@ System.register(['./mock-whiskeys', 'angular2/core', 'rxjs/Observable', 'angular
                 }
                 WhiskeyService.prototype.getWhiskeys = function () {
                     return this.http.get(this._whiskeysUrl)
-                        .map(function (res) { return res.json().data; })
-                        .do(function (data) { return console.log(data); })
+                        .map(this.extractData)
                         .catch(this.handleError);
                 };
                 WhiskeyService.prototype.addWhiskey = function (name) {
@@ -56,13 +55,22 @@ System.register(['./mock-whiskeys', 'angular2/core', 'rxjs/Observable', 'angular
                     );
                 };
                 WhiskeyService.prototype.getWhiskey = function (id) {
-                    return Promise.resolve(mock_whiskeys_1.WHISKEYS).then(function (whiskeys) { return whiskeys.filter(function (whiskey) { return whiskey.id === id; })[0]; });
+                    var whiskeys = this.http.get(this._whiskeysUrl)
+                        .map(this.extractData)
+                        .catch(this.handleError);
+                    var whiskey = whiskeys.filter(function (whiskey) { return whiskey.id === id; });
+                    return whiskey;
                 };
                 WhiskeyService.prototype.handleError = function (error) {
-                    // in a real world app, we may send the error to some remote logging infrastructure
-                    // instead of just logging it to the console
                     console.error(error);
                     return Observable_1.Observable.throw(error.json().error || 'Server error');
+                };
+                WhiskeyService.prototype.extractData = function (res) {
+                    if (res.status < 200 || res.status >= 300) {
+                        throw new Error('Bad response status: ' + res.status);
+                    }
+                    var body = res.json();
+                    return body.data || {};
                 };
                 WhiskeyService = __decorate([
                     core_1.Injectable(), 

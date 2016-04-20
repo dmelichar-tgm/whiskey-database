@@ -12,7 +12,7 @@ import {Observable}     from 'rxjs/Observable';
 @Component({
   selector: 'my-whiskeys',
   templateUrl: 'app/whiskeys.component.html',
-  styleUrls:  ['app/whiskeys.component.css'],
+  styleUrls: ['app/whiskeys.component.css'],
   directives: [WhiskeyDetailComponent]
 })
 export class WhiskeysComponent implements OnInit {
@@ -25,13 +25,9 @@ export class WhiskeysComponent implements OnInit {
     private _whiskeyService: WhiskeyService,
     private http: Http) { }
 
-  getWhiskeys() {
+  getWhiskeys(): Observable<Whiskey[]> {
     return this.http.get(this._whiskeysUrl)
-      .map(res => <Whiskey[]>res.json().data)
-      .do(
-        console.log(data)
-        //data => this.whiskeys = data
-       ) // eyeball results in the console
+      .map(this.extractData)
       .catch(this.handleError);
   }
 
@@ -46,8 +42,15 @@ export class WhiskeysComponent implements OnInit {
   }
 
   private handleError(error: Response) {
-    console.log('hello');
     console.error(error);
     return Observable.throw(error.json().error || 'Server error');
+  }
+
+  private extractData(res: Response) {
+    if (res.status < 200 || res.status >= 300) {
+      throw new Error('Bad response status: ' + res.status);
+    }
+    let body = res.json();
+    return body.data || {};
   }
 }
