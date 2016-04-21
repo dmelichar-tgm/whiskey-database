@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', './whiskey.service', './dashboard.component', './whiskeys.component', './whiskey-detail.component', 'angular2/http', 'a2-in-memory-web-api/core', './whiskey-data'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', 'angular2/http', './whiskey.service', './dashboard.component', './whiskeys.component', './whiskey-detail.component', 'a2-in-memory-web-api/core', './whiskey-data'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/router', './whiskey.service', './das
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, whiskey_service_1, dashboard_component_1, whiskeys_component_1, whiskey_detail_component_1, core_2, http_1, core_3, whiskey_data_1;
+    var core_1, router_1, http_1, whiskey_service_1, dashboard_component_1, whiskeys_component_1, whiskey_detail_component_1, core_2, http_2, core_3, whiskey_data_1;
     var AppComponent;
     return {
         setters:[
@@ -20,6 +20,10 @@ System.register(['angular2/core', 'angular2/router', './whiskey.service', './das
             },
             function (router_1_1) {
                 router_1 = router_1_1;
+            },
+            function (http_1_1) {
+                http_1 = http_1_1;
+                http_2 = http_1_1;
             },
             function (whiskey_service_1_1) {
                 whiskey_service_1 = whiskey_service_1_1;
@@ -32,9 +36,6 @@ System.register(['angular2/core', 'angular2/router', './whiskey.service', './das
             },
             function (whiskey_detail_component_1_1) {
                 whiskey_detail_component_1 = whiskey_detail_component_1_1;
-            },
-            function (http_1_1) {
-                http_1 = http_1_1;
             },
             function (core_3_1) {
                 core_3 = core_3_1;
@@ -55,9 +56,10 @@ System.register(['angular2/core', 'angular2/router', './whiskey.service', './das
                         directives: [router_1.ROUTER_DIRECTIVES],
                         providers: [
                             router_1.ROUTER_PROVIDERS,
+                            http_1.HTTP_PROVIDERS,
                             whiskey_service_1.WhiskeyService,
                             // in-memory web api providers
-                            core_2.provide(http_1.XHRBackend, { useClass: core_3.InMemoryBackendService }),
+                            core_2.provide(http_2.XHRBackend, { useClass: core_3.InMemoryBackendService }),
                             core_2.provide(core_3.SEED_DATA, { useClass: whiskey_data_1.WhiskeyData }) // in-mem server data
                         ]
                     }),

@@ -32,7 +32,7 @@ export class WhiskeysComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getWhiskeys();
+    this.getWhiskeys().subscribe(whiskeys => this.whiskeys = whiskeys);
   }
 
   onSelect(whiskey: Whiskey) { this.selectedWhiskey = whiskey; }

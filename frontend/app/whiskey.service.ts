@@ -37,7 +37,7 @@ export class WhiskeyService {
     );
   }
 
-  getWhiskey(id: number): Observable<Whiskey[]> {
+  getWhiskey(id: number): Observable<Whiskey> {
     let whiskeys = this.http.get(this._whiskeysUrl)
       .map(this.extractData)
       .catch(this.handleError);

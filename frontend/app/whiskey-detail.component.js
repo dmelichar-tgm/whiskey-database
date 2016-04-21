@@ -36,7 +36,7 @@ System.register(['angular2/core', 'angular2/router', './whiskey', './whiskey.ser
                     var _this = this;
                     var id = +this._routeParams.get('id');
                     this._whiskeyService.getWhiskey(id)
-                        .then(function (whiskey) { return _this.whiskey = whiskey; });
+                        .subscribe(function (whiskey) { return _this.whiskey = whiskey; });
                 };
                 WhiskeyDetailComponent.prototype.goBack = function () {
                     window.history.back();

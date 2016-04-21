@@ -24,13 +24,23 @@ export class DashboardComponent implements OnInit {
     private http: Http) {
   }
 
-  ngOnInit() {
+  getWhiskeys(): Observable<Whiskey[]> {
     return this.http.get(this._whiskeysUrl)
+      .map(res => <Whiskey[]>res.json().data)
+      .catch(this.handleError);
+  }
+
+  ngOnInit() {
+    this.getWhiskeys().subscribe(whiskeys => this.whiskeys = whiskeys.slice(1,5));
+  }
+/*
+  ngOnInit() {
+    this.http.get(this._whiskeysUrl)
       .map(res => <Whiskey[]>res.json().data)
       .do(data => this.whiskeys = data.slice(1, 5)) // eyeball results in the console
       .catch(this.handleError);
   }
-
+*/
   gotoDetail(whiskey: Whiskey) {
     let link = ['WhiskeyDetail', { id: whiskey.id }];
     this._router.navigate(link);

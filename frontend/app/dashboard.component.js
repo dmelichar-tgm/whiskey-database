@@ -38,13 +38,23 @@ System.register(['angular2/core', 'angular2/router', './whiskey.service', 'angul
                     this.whiskeys = [];
                     this._whiskeysUrl = 'app/whiskeys.json'; // URL to web api
                 }
-                DashboardComponent.prototype.ngOnInit = function () {
-                    var _this = this;
+                DashboardComponent.prototype.getWhiskeys = function () {
                     return this.http.get(this._whiskeysUrl)
                         .map(function (res) { return res.json().data; })
-                        .do(function (data) { return _this.whiskeys = data.slice(1, 5); }) // eyeball results in the console
                         .catch(this.handleError);
                 };
+                DashboardComponent.prototype.ngOnInit = function () {
+                    var _this = this;
+                    this.getWhiskeys().subscribe(function (whiskeys) { return _this.whiskeys = whiskeys.slice(1, 5); });
+                };
+                /*
+                  ngOnInit() {
+                    this.http.get(this._whiskeysUrl)
+                      .map(res => <Whiskey[]>res.json().data)
+                      .do(data => this.whiskeys = data.slice(1, 5)) // eyeball results in the console
+                      .catch(this.handleError);
+                  }
+                */
                 DashboardComponent.prototype.gotoDetail = function (whiskey) {
                     var link = ['WhiskeyDetail', { id: whiskey.id }];
                     this._router.navigate(link);

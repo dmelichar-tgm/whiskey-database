@@ -46,7 +46,8 @@ System.register(['angular2/core', 'angular2/router', './whiskey-detail.component
                         .catch(this.handleError);
                 };
                 WhiskeysComponent.prototype.ngOnInit = function () {
-                    this.getWhiskeys();
+                    var _this = this;
+                    this.getWhiskeys().subscribe(function (whiskeys) { return _this.whiskeys = whiskeys; });
                 };
                 WhiskeysComponent.prototype.onSelect = function (whiskey) { this.selectedWhiskey = whiskey; };
                 WhiskeysComponent.prototype.gotoDetail = function () {

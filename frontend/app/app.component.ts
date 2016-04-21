@@ -1,5 +1,7 @@
 import { Component } from 'angular2/core';
 import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from 'angular2/router';
+import {HTTP_PROVIDERS} from 'angular2/http';
+
 
 import { WhiskeyService } from './whiskey.service';
 import { DashboardComponent } from './dashboard.component';
@@ -28,6 +30,7 @@ import {WhiskeyData}          from './whiskey-data';
   directives: [ROUTER_DIRECTIVES],
   providers: [
     ROUTER_PROVIDERS,
+    HTTP_PROVIDERS,
     WhiskeyService,
     // in-memory web api providers
     provide(XHRBackend, { useClass: InMemoryBackendService }), // in-mem server

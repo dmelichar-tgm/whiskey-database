@@ -21,7 +21,7 @@ export class WhiskeyDetailComponent implements OnInit {
   ngOnInit() {
     let id = +this._routeParams.get('id');
     this._whiskeyService.getWhiskey(id)
-      .then(whiskey => this.whiskey = whiskey);
+      .subscribe(whiskey => this.whiskey = whiskey);
   }
 
   goBack() {
